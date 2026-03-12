@@ -22,29 +22,48 @@
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { background: var(--bg); color: var(--text); font-family: var(--font-mono); min-height: 100vh; overflow-x: hidden; }
 
-  header {
-    background: var(--surface);
-    border-bottom: 1px solid var(--border);
-    padding: 1rem 2rem;
-    display: flex; align-items: center; justify-content: space-between;
-    position: sticky; top: 0; z-index: 100;
+  /* ========== LOGIN ========== */
+  #login-screen {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
   }
-  .logo { font-family: var(--font-serif); font-size: 1.6rem; font-weight: 700; color: var(--accent); letter-spacing: -1px; }
-  .logo span { color: var(--text); font-weight: 300; font-style: italic; }
-
-  nav { display: flex; gap: 0.5rem; }
-  .tab-btn {
-    padding: 0.4rem 1rem; background: transparent; border: 1px solid var(--border);
-    color: var(--muted); cursor: pointer; font-family: var(--font-mono); font-size: 0.75rem;
-    letter-spacing: 1px; text-transform: uppercase; transition: all 0.2s;
+  .login-box {
+    background: var(--card); border: 1px solid var(--border);
+    padding: 2.5rem 2rem; width: 100%; max-width: 360px;
+    animation: fadeUp 0.4s ease both;
   }
-  .tab-btn.active, .tab-btn:hover { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+  .login-logo {
+    font-family: var(--font-serif); font-size: 2rem; font-weight: 700;
+    color: var(--accent); letter-spacing: -1px; text-align: center; margin-bottom: 0.25rem;
+  }
+  .login-logo span { color: var(--text); font-weight: 300; font-style: italic; }
+  .login-sub {
+    text-align: center; font-size: 0.65rem; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 2rem;
+  }
+  .login-box label {
+    display: block; font-size: 0.65rem; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 0.3rem; margin-top: 1rem;
+  }
+  .login-box input {
+    width: 100%; background: var(--bg); border: 1px solid var(--border);
+    color: var(--text); padding: 0.7rem 0.9rem; font-family: var(--font-mono);
+    font-size: 0.9rem; outline: none; transition: border-color 0.2s;
+  }
+  .login-box input:focus { border-color: var(--accent); }
+  .login-btn {
+    width: 100%; margin-top: 1.5rem; padding: 0.85rem;
+    background: var(--accent); color: var(--bg); border: none;
+    font-family: var(--font-mono); font-size: 0.8rem; font-weight: 700;
+    letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: opacity 0.2s;
+  }
+  .login-btn:hover { opacity: 0.85; }
+  .login-err { margin-top: 1rem; text-align: center; font-size: 0.75rem; color: var(--danger); display: none; }
+  .login-err.show { display: block; }
 
-  main { max-width: 1100px; margin: 0 auto; padding: 2rem; }
-  .section { display: none; }
-  .section.active { display: block; }
+  /* ========== APP ========== */
+  #app-screen { display: none; }
 
-  /* TOAST */
   #toast {
     position: fixed; bottom: 2rem; right: 2rem; z-index: 999;
     background: var(--card); border: 1px solid var(--border);
@@ -52,42 +71,57 @@
     transition: opacity 0.3s; pointer-events: none;
   }
   #toast.show { opacity: 1; }
-  #toast.ok { border-color: var(--accent2); color: var(--accent2); }
-  #toast.err { border-color: var(--danger); color: var(--danger); }
+  #toast.ok  { border-color: var(--accent2); color: var(--accent2); }
+  #toast.err { border-color: var(--danger);  color: var(--danger); }
 
-  /* LOADING */
-  .loading {
-    text-align: center; padding: 2rem; color: var(--muted);
-    font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase;
+  header {
+    background: var(--surface); border-bottom: 1px solid var(--border);
+    padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 100;
   }
-  .loading::after { content: ''; animation: dots 1.2s infinite; }
-  @keyframes dots { 0%{content:'.'} 33%{content:'..'} 66%{content:'...'} }
+  .logo { font-family: var(--font-serif); font-size: 1.6rem; font-weight: 700; color: var(--accent); letter-spacing: -1px; }
+  .logo span { color: var(--text); font-weight: 300; font-style: italic; }
+  .header-right { display: flex; align-items: center; gap: 1rem; }
+  nav { display: flex; gap: 0.5rem; }
+  .tab-btn {
+    padding: 0.4rem 1rem; background: transparent; border: 1px solid var(--border);
+    color: var(--muted); cursor: pointer; font-family: var(--font-mono); font-size: 0.75rem;
+    letter-spacing: 1px; text-transform: uppercase; transition: all 0.2s;
+  }
+  .tab-btn.active, .tab-btn:hover { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+  .btn-logout {
+    padding: 0.4rem 0.8rem; background: transparent; border: 1px solid var(--border);
+    color: var(--muted); cursor: pointer; font-family: var(--font-mono); font-size: 0.65rem;
+    letter-spacing: 1px; text-transform: uppercase; transition: all 0.2s;
+  }
+  .btn-logout:hover { border-color: var(--danger); color: var(--danger); }
 
-  /* STATS ROW */
+  main { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+  .section { display: none; }
+  .section.active { display: block; }
+
   .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 2rem; }
   .stat-card {
     background: var(--card); border: 1px solid var(--border);
-    padding: 1.25rem 1.5rem; position: relative; overflow: hidden;
-    animation: fadeUp 0.4s ease both;
+    padding: 1.25rem 1.5rem; position: relative; overflow: hidden; animation: fadeUp 0.4s ease both;
   }
   .stat-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
-  .stat-card.income::before { background: var(--accent2); }
+  .stat-card.income::before  { background: var(--accent2); }
   .stat-card.expense::before { background: var(--danger); }
   .stat-card.balance::before { background: var(--accent); }
   .stat-label { font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 0.5rem; }
   .stat-value { font-family: var(--font-serif); font-size: 2rem; font-weight: 700; line-height: 1; }
-  .stat-card.income .stat-value { color: var(--accent2); }
+  .stat-card.income .stat-value  { color: var(--accent2); }
   .stat-card.expense .stat-value { color: var(--danger); }
   .stat-card.balance .stat-value { color: var(--accent); }
 
   .grid-2 { display: grid; grid-template-columns: 1fr 1.4fr; gap: 1.5rem; }
-
   .panel { background: var(--card); border: 1px solid var(--border); padding: 1.5rem; animation: fadeUp 0.5s ease both; }
   .panel-title { font-size: 0.65rem; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--border); }
 
   label { display: block; font-size: 0.65rem; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin-bottom: 0.3rem; margin-top: 0.9rem; }
   label:first-of-type { margin-top: 0; }
-  input, select, textarea {
+  input, select {
     width: 100%; background: var(--bg); border: 1px solid var(--border);
     color: var(--text); padding: 0.6rem 0.8rem; font-family: var(--font-mono);
     font-size: 0.85rem; outline: none; transition: border-color 0.2s;
@@ -101,8 +135,8 @@
     color: var(--muted); font-family: var(--font-mono); font-size: 0.75rem;
     cursor: pointer; text-transform: uppercase; letter-spacing: 1px; transition: all 0.2s;
   }
-  .type-btn.active-income { background: var(--accent2); color: var(--bg); border-color: var(--accent2); }
-  .type-btn.active-expense { background: var(--danger); color: #fff; border-color: var(--danger); }
+  .type-btn.active-income  { background: var(--accent2); color: var(--bg); border-color: var(--accent2); }
+  .type-btn.active-expense { background: var(--danger);  color: #fff;      border-color: var(--danger); }
 
   .btn-add {
     width: 100%; margin-top: 1.2rem; padding: 0.8rem;
@@ -124,8 +158,7 @@
 
   .tx-item {
     display: flex; align-items: center; padding: 0.85rem 1rem;
-    border-bottom: 1px solid var(--border); transition: background 0.15s;
-    animation: fadeUp 0.3s ease both;
+    border-bottom: 1px solid var(--border); transition: background 0.15s; animation: fadeUp 0.3s ease both;
   }
   .tx-item:hover { background: var(--surface); }
   .tx-cat { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-size: 1rem; margin-right: 1rem; flex-shrink: 0; }
@@ -134,7 +167,7 @@
   .tx-meta { font-size: 0.65rem; color: var(--muted); margin-top: 2px; }
   .tx-amount { font-family: var(--font-serif); font-size: 1rem; font-weight: 700; margin-right: 0.75rem; }
   .tx-amount.ingreso { color: var(--accent2); }
-  .tx-amount.gasto { color: var(--danger); }
+  .tx-amount.gasto   { color: var(--danger); }
   .tx-del { background: none; border: none; color: var(--border); cursor: pointer; font-size: 1rem; padding: 0.2rem 0.4rem; transition: color 0.2s; }
   .tx-del:hover { color: var(--danger); }
 
@@ -145,16 +178,16 @@
   .budget-amounts { font-size: 0.7rem; color: var(--muted); text-align: right; }
   .budget-bar-bg { height: 6px; background: var(--border); overflow: hidden; }
   .budget-bar-fill { height: 100%; transition: width 0.5s ease; }
-  .budget-ok { background: var(--accent2); }
+  .budget-ok   { background: var(--accent2); }
   .budget-warn { background: var(--accent); }
   .budget-over { background: var(--danger); }
   .budget-pct { font-size: 0.65rem; color: var(--muted); margin-top: 0.4rem; }
 
   .period-row { display: flex; gap: 0.5rem; align-items: center; margin-bottom: 1.5rem; }
   .period-label { font-size: 0.65rem; color: var(--muted); letter-spacing: 1px; text-transform: uppercase; margin-right: 0.5rem; }
-
   .empty-state { text-align: center; padding: 3rem 1rem; color: var(--muted); font-size: 0.8rem; letter-spacing: 1px; }
   .empty-icon { font-size: 2.5rem; margin-bottom: 0.75rem; }
+  .loading { text-align: center; padding: 2rem; color: var(--muted); font-size: 0.75rem; letter-spacing: 2px; }
 
   @keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
 
@@ -169,331 +202,316 @@
 </head>
 <body>
 
-<div id="toast"></div>
-
-<header>
-  <div class="logo">Mis<span>Finanzas</span></div>
-  <nav>
-    <button class="tab-btn active" onclick="showTab('dashboard', this)">Dashboard</button>
-    <button class="tab-btn" onclick="showTab('gastos', this)">Gastos</button>
-    <button class="tab-btn" onclick="showTab('presupuesto', this)">Presupuesto</button>
-  </nav>
-</header>
-
-<main>
-
-  <!-- DASHBOARD -->
-  <div id="tab-dashboard" class="section active">
-    <div class="period-row">
-      <span class="period-label">Ver:</span>
-      <button class="filter-btn active" onclick="setPeriod('dia', this)">Hoy</button>
-      <button class="filter-btn" onclick="setPeriod('semana', this)">Esta semana</button>
-      <button class="filter-btn" onclick="setPeriod('mes', this)">Este mes</button>
-      <button class="filter-btn" onclick="setPeriod('todo', this)">Todo</button>
-    </div>
-    <div class="stats-row">
-      <div class="stat-card income"><div class="stat-label">Ingresos</div><div class="stat-value" id="stat-income">S/ 0.00</div></div>
-      <div class="stat-card expense"><div class="stat-label">Gastos</div><div class="stat-value" id="stat-expense">S/ 0.00</div></div>
-      <div class="stat-card balance"><div class="stat-label">Balance</div><div class="stat-value" id="stat-balance">S/ 0.00</div></div>
-    </div>
-    <div class="panel">
-      <div class="panel-title">Últimas transacciones</div>
-      <div id="dash-tx-list" class="tx-list"></div>
-    </div>
+<!-- ========== LOGIN ========== -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">Mis<span>Finanzas</span></div>
+    <div class="login-sub">Control total de tu dinero</div>
+    <label>Usuario</label>
+    <input type="text" id="login-user" placeholder="usuario" autocomplete="username">
+    <label>Contraseña</label>
+    <input type="password" id="login-pass" placeholder="••••••••" autocomplete="current-password"
+           onkeydown="if(event.key==='Enter') doLogin()">
+    <button class="login-btn" onclick="doLogin()">Entrar</button>
+    <div class="login-err" id="login-err">Usuario o contraseña incorrectos</div>
   </div>
+</div>
 
-  <!-- GASTOS -->
-  <div id="tab-gastos" class="section">
-    <div class="grid-2">
+<!-- ========== APP ========== -->
+<div id="app-screen">
+  <div id="toast"></div>
+  <header>
+    <div class="logo">Mis<span>Finanzas</span></div>
+    <div class="header-right">
+      <nav>
+        <button class="tab-btn active" onclick="showTab('dashboard', this)">Dashboard</button>
+        <button class="tab-btn" onclick="showTab('gastos', this)">Gastos</button>
+        <button class="tab-btn" onclick="showTab('presupuesto', this)">Presupuesto</button>
+      </nav>
+      <button class="btn-logout" onclick="doLogout()">Salir</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- DASHBOARD -->
+    <div id="tab-dashboard" class="section active">
+      <div class="period-row">
+        <span class="period-label">Ver:</span>
+        <button class="filter-btn active" onclick="setPeriod('dia', this)">Hoy</button>
+        <button class="filter-btn" onclick="setPeriod('semana', this)">Esta semana</button>
+        <button class="filter-btn" onclick="setPeriod('mes', this)">Este mes</button>
+        <button class="filter-btn" onclick="setPeriod('todo', this)">Todo</button>
+      </div>
+      <div class="stats-row">
+        <div class="stat-card income"><div class="stat-label">Ingresos</div><div class="stat-value" id="stat-income">S/ 0.00</div></div>
+        <div class="stat-card expense"><div class="stat-label">Gastos</div><div class="stat-value" id="stat-expense">S/ 0.00</div></div>
+        <div class="stat-card balance"><div class="stat-label">Balance</div><div class="stat-value" id="stat-balance">S/ 0.00</div></div>
+      </div>
       <div class="panel">
-        <div class="panel-title">Nueva transacción</div>
-        <label>Tipo</label>
-        <div class="type-toggle">
-          <button class="type-btn active-expense" id="btn-gasto" onclick="setType('gasto')">— Gasto</button>
-          <button class="type-btn" id="btn-ingreso" onclick="setType('ingreso')">+ Ingreso</button>
+        <div class="panel-title">Últimas transacciones</div>
+        <div id="dash-tx-list" class="tx-list"></div>
+      </div>
+    </div>
+
+    <!-- GASTOS -->
+    <div id="tab-gastos" class="section">
+      <div class="grid-2">
+        <div class="panel">
+          <div class="panel-title">Nueva transacción</div>
+          <label>Tipo</label>
+          <div class="type-toggle">
+            <button class="type-btn active-expense" id="btn-gasto"   onclick="setType('gasto')">— Gasto</button>
+            <button class="type-btn"                id="btn-ingreso" onclick="setType('ingreso')">+ Ingreso</button>
+          </div>
+          <label>Descripción</label>
+          <input type="text" id="tx-desc" placeholder="Ej: Almuerzo, taxi, salario...">
+          <label>Monto (S/)</label>
+          <input type="number" id="tx-amount" placeholder="0.00" min="0" step="0.01">
+          <label>Categoría</label>
+          <select id="tx-cat">
+            <option value="🍔 Comida">🍔 Comida</option>
+            <option value="🚌 Transporte">🚌 Transporte</option>
+            <option value="🏠 Vivienda">🏠 Vivienda</option>
+            <option value="💊 Salud">💊 Salud</option>
+            <option value="🎮 Entretenimiento">🎮 Entretenimiento</option>
+            <option value="👕 Ropa">👕 Ropa</option>
+            <option value="📚 Educación">📚 Educación</option>
+            <option value="💼 Trabajo/Ingresos">💼 Trabajo/Ingresos</option>
+            <option value="🛒 Supermercado">🛒 Supermercado</option>
+            <option value="💡 Servicios">💡 Servicios</option>
+            <option value="📱 Tecnología">📱 Tecnología</option>
+            <option value="🎁 Otros">🎁 Otros</option>
+          </select>
+          <label>Fecha</label>
+          <input type="date" id="tx-date">
+          <button class="btn-add" id="btn-add-tx" onclick="addTransaction()">+ Agregar</button>
         </div>
-        <label>Descripción</label>
-        <input type="text" id="tx-desc" placeholder="Ej: Almuerzo, taxi, salario...">
-        <label>Monto (S/)</label>
-        <input type="number" id="tx-amount" placeholder="0.00" min="0" step="0.01">
-        <label>Categoría</label>
-        <select id="tx-cat">
-          <option value="🍔 Comida">🍔 Comida</option>
-          <option value="🚌 Transporte">🚌 Transporte</option>
-          <option value="🏠 Vivienda">🏠 Vivienda</option>
-          <option value="💊 Salud">💊 Salud</option>
-          <option value="🎮 Entretenimiento">🎮 Entretenimiento</option>
-          <option value="👕 Ropa">👕 Ropa</option>
-          <option value="📚 Educación">📚 Educación</option>
-          <option value="💼 Trabajo/Ingresos">💼 Trabajo/Ingresos</option>
-          <option value="🛒 Supermercado">🛒 Supermercado</option>
-          <option value="💡 Servicios">💡 Servicios</option>
-          <option value="📱 Tecnología">📱 Tecnología</option>
-          <option value="🎁 Otros">🎁 Otros</option>
-        </select>
-        <label>Fecha</label>
-        <input type="date" id="tx-date">
-        <button class="btn-add" id="btn-add-tx" onclick="addTransaction()">+ Agregar</button>
-      </div>
-      <div class="panel">
-        <div class="panel-title">Historial</div>
-        <div class="tx-filter">
-          <button class="filter-btn active" onclick="filterTx('todo', this)">Todos</button>
-          <button class="filter-btn" onclick="filterTx('gasto', this)">Gastos</button>
-          <button class="filter-btn" onclick="filterTx('ingreso', this)">Ingresos</button>
+        <div class="panel">
+          <div class="panel-title">Historial</div>
+          <div class="tx-filter">
+            <button class="filter-btn active" onclick="filterTx('todo', this)">Todos</button>
+            <button class="filter-btn" onclick="filterTx('gasto', this)">Gastos</button>
+            <button class="filter-btn" onclick="filterTx('ingreso', this)">Ingresos</button>
+          </div>
+          <div id="tx-list" class="tx-list"></div>
         </div>
-        <div id="tx-list" class="tx-list"></div>
       </div>
     </div>
-  </div>
 
-  <!-- PRESUPUESTO -->
-  <div id="tab-presupuesto" class="section">
-    <div class="grid-2">
-      <div class="panel">
-        <div class="panel-title">Definir presupuesto mensual</div>
-        <label>Categoría</label>
-        <select id="bud-cat">
-          <option>🍔 Comida</option>
-          <option>🚌 Transporte</option>
-          <option>🏠 Vivienda</option>
-          <option>💊 Salud</option>
-          <option>🎮 Entretenimiento</option>
-          <option>👕 Ropa</option>
-          <option>📚 Educación</option>
-          <option>🛒 Supermercado</option>
-          <option>💡 Servicios</option>
-          <option>📱 Tecnología</option>
-          <option>🎁 Otros</option>
-        </select>
-        <label>Límite mensual (S/)</label>
-        <input type="number" id="bud-limit" placeholder="0.00" min="0" step="0.01">
-        <button class="btn-add" id="btn-add-bud" onclick="addBudget()">Guardar presupuesto</button>
-      </div>
-      <div class="panel">
-        <div class="panel-title">Estado del presupuesto — este mes</div>
-        <div id="budget-list" class="budget-grid"></div>
+    <!-- PRESUPUESTO -->
+    <div id="tab-presupuesto" class="section">
+      <div class="grid-2">
+        <div class="panel">
+          <div class="panel-title">Definir presupuesto mensual</div>
+          <label>Categoría</label>
+          <select id="bud-cat">
+            <option>🍔 Comida</option>
+            <option>🚌 Transporte</option>
+            <option>🏠 Vivienda</option>
+            <option>💊 Salud</option>
+            <option>🎮 Entretenimiento</option>
+            <option>👕 Ropa</option>
+            <option>📚 Educación</option>
+            <option>🛒 Supermercado</option>
+            <option>💡 Servicios</option>
+            <option>📱 Tecnología</option>
+            <option>🎁 Otros</option>
+          </select>
+          <label>Límite mensual (S/)</label>
+          <input type="number" id="bud-limit" placeholder="0.00" min="0" step="0.01">
+          <button class="btn-add" id="btn-add-bud" onclick="addBudget()">Guardar presupuesto</button>
+        </div>
+        <div class="panel">
+          <div class="panel-title">Estado del presupuesto — este mes</div>
+          <div id="budget-list" class="budget-grid"></div>
+        </div>
       </div>
     </div>
-  </div>
-
-</main>
+  </main>
+</div>
 
 <script>
 // =============================================
-// CONFIGURACIÓN NEON DATA API
+// 🔐 CREDENCIALES DE LOGIN — cámbialas aquí
 // =============================================
-const API_URL = 'https://ep-twilight-surf-adu9brwj.apirest.c-2.us-east-1.aws.neon.tech/neondb/rest/v1';
-
-// IMPORTANTE: Ve a Neon → Data API → Settings y copia tu API Key aquí
-const API_KEY = 'TU_API_KEY_AQUI';
-
-const HEADERS = {
-  'Content-Type': 'application/json',
-  'apikey': API_KEY,
-  'Authorization': `Bearer ${API_KEY}`
-};
+const LOGIN_USER = 'admin';
+const LOGIN_PASS = '1234';
 
 // =============================================
-// ESTADO LOCAL
+// 🗄️ NEON HTTP API
 // =============================================
-let transactions = [];
-let budgets = [];
-let txType = 'gasto';
-let txFilter = 'todo';
-let period = 'dia';
+const NEON_HOST = 'ep-twilight-surf-adu9brwj-pooler.c-2.us-east-1.aws.neon.tech';
+const NEON_USER = 'neondb_owner';
+const NEON_PASS = 'npg_Q4UKt6BRIbSz';
+const NEON_DB   = 'neondb';
 
-// ID de usuario fijo para demo (sin auth)
+async function sql(query, params = []) {
+  const res = await fetch(`https://${NEON_HOST}/sql`, {
+    method: 'POST',
+    headers: {
+      'Authorization': 'Basic ' + btoa(`${NEON_USER}:${NEON_PASS}`),
+      'Content-Type': 'application/json',
+      'Neon-Connection-String': `postgresql://${NEON_USER}:${NEON_PASS}@${NEON_HOST}/${NEON_DB}?sslmode=require`
+    },
+    body: JSON.stringify({ query, params })
+  });
+  if (!res.ok) throw new Error(await res.text());
+  return res.json();
+}
+
+// =============================================
+// LOGIN
+// =============================================
+function doLogin() {
+  const u = document.getElementById('login-user').value.trim();
+  const p = document.getElementById('login-pass').value;
+  const err = document.getElementById('login-err');
+  if (u === LOGIN_USER && p === LOGIN_PASS) {
+    err.classList.remove('show');
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('app-screen').style.display = 'block';
+    init();
+  } else {
+    err.classList.add('show');
+    document.getElementById('login-pass').value = '';
+    document.getElementById('login-pass').focus();
+  }
+}
+
+function doLogout() {
+  document.getElementById('app-screen').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('login-user').value = '';
+  document.getElementById('login-pass').value = '';
+  transactions = []; budgets = [];
+}
+
+// =============================================
+// ESTADO
+// =============================================
+let transactions = [], budgets = [];
+let txType = 'gasto', txFilter = 'todo', period = 'dia';
 const USER_ID = '00000000-0000-0000-0000-000000000001';
-
-document.getElementById('tx-date').valueAsDate = new Date();
 
 // =============================================
 // UTILIDADES
 // =============================================
-function fmt(n) { return 'S/ ' + parseFloat(n).toFixed(2); }
+function fmt(n) { return 'S/ ' + parseFloat(n || 0).toFixed(2); }
 
 function toast(msg, type = 'ok') {
   const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.className = `show ${type}`;
+  t.textContent = msg; t.className = `show ${type}`;
   setTimeout(() => t.className = '', 2500);
 }
 
 function formatDate(d) {
-  const [y, m, day] = d.split('-');
+  if (!d) return '';
+  const clean = (d + '').split('T')[0];
+  const [y, m, day] = clean.split('-');
   const months = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'];
   return `${parseInt(day)} ${months[parseInt(m)-1]} ${y}`;
 }
 
 // =============================================
-// NEON DATA API — CRUD
+// DATOS
 // =============================================
-
-// Cargar todas las transacciones
 async function loadTransactions() {
   try {
-    const res = await fetch(`${API_URL}/transactions?user_id=eq.${USER_ID}&order=date.desc,created_at.desc`, {
-      headers: HEADERS
-    });
-    if (!res.ok) throw new Error(await res.text());
-    transactions = await res.json();
+    const r = await sql(`SELECT * FROM transactions WHERE user_id = $1 ORDER BY date DESC, created_at DESC`, [USER_ID]);
+    transactions = r.rows || [];
     renderAll();
-  } catch (e) {
-    console.error(e);
-    toast('Error cargando transacciones', 'err');
-  }
+  } catch(e) { console.error(e); toast('Error cargando transacciones', 'err'); }
 }
 
-// Cargar todos los presupuestos
 async function loadBudgets() {
   try {
-    const res = await fetch(`${API_URL}/budgets?user_id=eq.${USER_ID}`, {
-      headers: HEADERS
-    });
-    if (!res.ok) throw new Error(await res.text());
-    budgets = await res.json();
+    const r = await sql(`SELECT * FROM budgets WHERE user_id = $1`, [USER_ID]);
+    budgets = r.rows || [];
     renderBudget();
-  } catch (e) {
-    console.error(e);
-    toast('Error cargando presupuestos', 'err');
-  }
+  } catch(e) { console.error(e); toast('Error cargando presupuestos', 'err'); }
 }
 
-// Insertar transacción
 async function addTransaction() {
-  const desc = document.getElementById('tx-desc').value.trim();
-  const amount = parseFloat(document.getElementById('tx-amount').value);
+  const desc     = document.getElementById('tx-desc').value.trim();
+  const amount   = parseFloat(document.getElementById('tx-amount').value);
   const category = document.getElementById('tx-cat').value;
-  const date = document.getElementById('tx-date').value;
-
-  if (!desc || !amount || amount <= 0 || !date) {
-    toast('Completa todos los campos', 'err');
-    return;
-  }
-
+  const date     = document.getElementById('tx-date').value;
+  if (!desc || !amount || amount <= 0 || !date) { toast('Completa todos los campos', 'err'); return; }
   const btn = document.getElementById('btn-add-tx');
-  btn.disabled = true;
-  btn.textContent = 'Guardando...';
-
+  btn.disabled = true; btn.textContent = 'Guardando...';
   try {
-    const res = await fetch(`${API_URL}/transactions`, {
-      method: 'POST',
-      headers: { ...HEADERS, 'Prefer': 'return=representation' },
-      body: JSON.stringify({ user_id: USER_ID, description: desc, amount, category, date, type: txType })
-    });
-    if (!res.ok) throw new Error(await res.text());
-
+    await sql(`INSERT INTO transactions (user_id, description, amount, category, date, type) VALUES ($1,$2,$3,$4,$5,$6)`,
+              [USER_ID, desc, amount, category, date, txType]);
     document.getElementById('tx-desc').value = '';
     document.getElementById('tx-amount').value = '';
     toast('Transacción guardada ✓');
     await loadTransactions();
-  } catch (e) {
-    console.error(e);
-    toast('Error al guardar', 'err');
-  } finally {
-    btn.disabled = false;
-    btn.textContent = '+ Agregar';
-  }
+  } catch(e) { console.error(e); toast('Error al guardar', 'err'); }
+  finally { btn.disabled = false; btn.textContent = '+ Agregar'; }
 }
 
-// Eliminar transacción
 async function delTransaction(id) {
   if (!confirm('¿Eliminar esta transacción?')) return;
   try {
-    const res = await fetch(`${API_URL}/transactions?id=eq.${id}`, {
-      method: 'DELETE',
-      headers: HEADERS
-    });
-    if (!res.ok) throw new Error(await res.text());
+    await sql(`DELETE FROM transactions WHERE id = $1`, [id]);
     toast('Eliminado ✓');
     await loadTransactions();
-  } catch (e) {
-    console.error(e);
-    toast('Error al eliminar', 'err');
-  }
+  } catch(e) { console.error(e); toast('Error al eliminar', 'err'); }
 }
 
-// Guardar presupuesto (upsert)
 async function addBudget() {
-  const category = document.getElementById('bud-cat').value;
+  const category      = document.getElementById('bud-cat').value;
   const monthly_limit = parseFloat(document.getElementById('bud-limit').value);
-
-  if (!monthly_limit || monthly_limit <= 0) {
-    toast('Ingresa un límite válido', 'err');
-    return;
-  }
-
+  if (!monthly_limit || monthly_limit <= 0) { toast('Ingresa un límite válido', 'err'); return; }
   const btn = document.getElementById('btn-add-bud');
-  btn.disabled = true;
-  btn.textContent = 'Guardando...';
-
+  btn.disabled = true; btn.textContent = 'Guardando...';
   try {
-    // Upsert: insertar o actualizar si ya existe esa categoría
-    const res = await fetch(`${API_URL}/budgets`, {
-      method: 'POST',
-      headers: { ...HEADERS, 'Prefer': 'resolution=merge-duplicates,return=representation' },
-      body: JSON.stringify({ user_id: USER_ID, category, monthly_limit })
-    });
-    if (!res.ok) throw new Error(await res.text());
+    await sql(`INSERT INTO budgets (user_id, category, monthly_limit) VALUES ($1,$2,$3)
+               ON CONFLICT (user_id, category) DO UPDATE SET monthly_limit = EXCLUDED.monthly_limit, updated_at = NOW()`,
+              [USER_ID, category, monthly_limit]);
+    document.getElementById('bud-limit').value = '';
     toast('Presupuesto guardado ✓');
     await loadBudgets();
-  } catch (e) {
-    console.error(e);
-    toast('Error al guardar presupuesto', 'err');
-  } finally {
-    btn.disabled = false;
-    btn.textContent = 'Guardar presupuesto';
-  }
+  } catch(e) { console.error(e); toast('Error al guardar presupuesto', 'err'); }
+  finally { btn.disabled = false; btn.textContent = 'Guardar presupuesto'; }
 }
 
 // =============================================
-// UI HELPERS
+// UI
 // =============================================
 function setType(t) {
   txType = t;
-  document.getElementById('btn-gasto').className = 'type-btn' + (t === 'gasto' ? ' active-expense' : '');
-  document.getElementById('btn-ingreso').className = 'type-btn' + (t === 'ingreso' ? ' active-income' : '');
+  document.getElementById('btn-gasto').className   = 'type-btn' + (t === 'gasto'   ? ' active-expense' : '');
+  document.getElementById('btn-ingreso').className = 'type-btn' + (t === 'ingreso' ? ' active-income'  : '');
 }
-
 function filterTx(f, btn) {
   txFilter = f;
   document.querySelectorAll('.tx-filter .filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  renderTxList();
+  btn.classList.add('active'); renderTxList();
 }
-
 function setPeriod(p, btn) {
   period = p;
   document.querySelectorAll('.period-row .filter-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  renderDashboard();
+  btn.classList.add('active'); renderDashboard();
 }
-
 function showTab(tab, btn) {
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('tab-' + tab).classList.add('active');
   btn.classList.add('active');
 }
-
 function filterByPeriod(txs) {
   const now = new Date();
   return txs.filter(t => {
-    const d = new Date(t.date + 'T12:00:00');
-    if (period === 'dia') return d.toDateString() === now.toDateString();
-    if (period === 'semana') {
-      const start = new Date(now); start.setDate(now.getDate() - now.getDay());
-      start.setHours(0,0,0,0);
-      return d >= start;
-    }
-    if (period === 'mes') return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
+    const d = new Date((t.date + '').split('T')[0] + 'T12:00:00');
+    if (period === 'dia')    return d.toDateString() === now.toDateString();
+    if (period === 'semana') { const s = new Date(now); s.setDate(now.getDate()-now.getDay()); s.setHours(0,0,0,0); return d >= s; }
+    if (period === 'mes')    return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear();
     return true;
   });
 }
-
 function txHTML(t) {
-  const emoji = t.category.split(' ')[0];
+  const emoji = (t.category || '🎁').split(' ')[0];
   return `<div class="tx-item">
     <div class="tx-cat">${emoji}</div>
     <div class="tx-info">
@@ -510,53 +528,42 @@ function txHTML(t) {
 // =============================================
 function renderDashboard() {
   const filtered = filterByPeriod(transactions);
-  const income  = filtered.filter(t => t.type === 'ingreso').reduce((a, t) => a + parseFloat(t.amount), 0);
-  const expense = filtered.filter(t => t.type === 'gasto').reduce((a, t) => a + parseFloat(t.amount), 0);
-
+  const income  = filtered.filter(t => t.type === 'ingreso').reduce((a,t) => a + parseFloat(t.amount), 0);
+  const expense = filtered.filter(t => t.type === 'gasto').reduce((a,t)  => a + parseFloat(t.amount), 0);
   document.getElementById('stat-income').textContent  = fmt(income);
   document.getElementById('stat-expense').textContent = fmt(expense);
-
   const bal = income - expense;
   const balEl = document.getElementById('stat-balance');
   balEl.textContent = fmt(bal);
   balEl.style.color = bal >= 0 ? 'var(--accent)' : 'var(--danger)';
-
   const list = document.getElementById('dash-tx-list');
   const recent = filtered.slice(0, 8);
-  if (!recent.length) {
-    list.innerHTML = `<div class="empty-state"><div class="empty-icon">📭</div>Sin transacciones en este período</div>`;
-    return;
-  }
-  list.innerHTML = recent.map(t => txHTML(t)).join('');
+  list.innerHTML = recent.length
+    ? recent.map(t => txHTML(t)).join('')
+    : `<div class="empty-state"><div class="empty-icon">📭</div>Sin transacciones en este período</div>`;
 }
-
 function renderTxList() {
   const list = document.getElementById('tx-list');
-  let data = txFilter === 'todo' ? transactions : transactions.filter(t => t.type === txFilter);
-  if (!data.length) {
-    list.innerHTML = `<div class="empty-state"><div class="empty-icon">🗂️</div>No hay registros aún</div>`;
-    return;
-  }
-  list.innerHTML = data.map(t => txHTML(t)).join('');
+  const data = txFilter === 'todo' ? transactions : transactions.filter(t => t.type === txFilter);
+  list.innerHTML = data.length
+    ? data.map(t => txHTML(t)).join('')
+    : `<div class="empty-state"><div class="empty-icon">🗂️</div>No hay registros aún</div>`;
 }
-
 function renderBudget() {
   const list = document.getElementById('budget-list');
   const now = new Date();
   const monthTx = transactions.filter(t => {
-    const d = new Date(t.date + 'T12:00:00');
+    const d = new Date((t.date + '').split('T')[0] + 'T12:00:00');
     return d.getMonth() === now.getMonth() && d.getFullYear() === now.getFullYear() && t.type === 'gasto';
   });
-
   if (!budgets.length) {
     list.innerHTML = `<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">📊</div>Define tu primer presupuesto</div>`;
     return;
   }
-
   list.innerHTML = budgets.map(b => {
-    const spent = monthTx.filter(t => t.category === b.category).reduce((a, t) => a + parseFloat(t.amount), 0);
-    const pct = Math.min((spent / b.monthly_limit) * 100, 100);
-    const cls = pct < 70 ? 'budget-ok' : pct < 90 ? 'budget-warn' : 'budget-over';
+    const spent = monthTx.filter(t => t.category === b.category).reduce((a,t) => a + parseFloat(t.amount), 0);
+    const pct   = Math.min((spent / b.monthly_limit) * 100, 100);
+    const cls   = pct < 70 ? 'budget-ok' : pct < 90 ? 'budget-warn' : 'budget-over';
     return `<div class="budget-card">
       <div class="budget-top">
         <div class="budget-cat">${b.category}</div>
@@ -567,41 +574,26 @@ function renderBudget() {
     </div>`;
   }).join('');
 }
-
-function renderAll() {
-  renderDashboard();
-  renderTxList();
-  renderBudget();
-}
+function renderAll() { renderDashboard(); renderTxList(); renderBudget(); }
 
 // =============================================
-// INIT — primero crear usuario demo si no existe
+// INIT
 // =============================================
 async function ensureUser() {
   try {
-    // Verificar si el usuario ya existe
-    const res = await fetch(`${API_URL}/users?id=eq.${USER_ID}`, { headers: HEADERS });
-    const data = await res.json();
-    if (!data.length) {
-      // Crear usuario demo
-      await fetch(`${API_URL}/users`, {
-        method: 'POST',
-        headers: HEADERS,
-        body: JSON.stringify({ id: USER_ID, email: 'demo@misfinanzas.pe', name: 'Usuario Demo' })
-      });
+    const r = await sql(`SELECT id FROM users WHERE id = $1`, [USER_ID]);
+    if (!r.rows || !r.rows.length) {
+      await sql(`INSERT INTO users (id, email, name) VALUES ($1,$2,$3) ON CONFLICT DO NOTHING`,
+                [USER_ID, 'demo@misfinanzas.pe', 'Usuario Demo']);
     }
-  } catch (e) {
-    console.warn('No se pudo verificar usuario:', e);
-  }
+  } catch(e) { console.warn('ensureUser:', e); }
 }
-
 async function init() {
-  document.getElementById('dash-tx-list').innerHTML = '<div class="loading">Cargando</div>';
+  document.getElementById('dash-tx-list').innerHTML = '<div class="loading">Cargando datos...</div>';
+  document.getElementById('tx-date').valueAsDate = new Date();
   await ensureUser();
   await Promise.all([loadTransactions(), loadBudgets()]);
 }
-
-init();
 </script>
 </body>
 </html>
