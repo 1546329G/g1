@@ -346,13 +346,9 @@ const NEON_PASS = 'npg_Q4UKt6BRIbSz';
 const NEON_DB   = 'neondb';
 
 async function sql(query, params = []) {
-  const res = await fetch(`https://${NEON_HOST}/sql`, {
+  const res = await fetch('/api/db', {
     method: 'POST',
-    headers: {
-      'Authorization': 'Basic ' + btoa(`${NEON_USER}:${NEON_PASS}`),
-      'Content-Type': 'application/json',
-      'Neon-Connection-String': `postgresql://${NEON_USER}:${NEON_PASS}@${NEON_HOST}/${NEON_DB}?sslmode=require`
-    },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ query, params })
   });
   if (!res.ok) throw new Error(await res.text());
